@@ -23,7 +23,8 @@ namespace ASP_DBSlide.Controllers
         // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            StudentDetailsViewModel model = _studentRepository.Get(id).ToDetails();
+            return View(model);
         }
 
         // GET: StudentController/Create
@@ -35,57 +36,69 @@ namespace ASP_DBSlide.Controllers
         // POST: StudentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(StudentCreateForm form)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (!ModelState.IsValid) throw new Exception();
+                int id = _studentRepository.Insert(form.ToBLL());
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch
             {
-                return View();
+                return View(form);
             }
         }
 
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            StudentEditForm model = _studentRepository.Get(id).ToEdit();
+            return View(model);
         }
 
         // POST: StudentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, StudentEditForm form)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (!ModelState.IsValid) throw new Exception();
+                Student bllStudent = _studentRepository.Get(id);
+                bllStudent.Course_id = form.Course_Id;
+                bllStudent.Section_id = form.Section_Id;
+                bllStudent.Year_result = form.Year_Result;
+                _studentRepository.Update(id, bllStudent);
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch
             {
-                return View();
+                return View(form);
             }
         }
 
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            StudentDeleteForm model = _studentRepository.Get(id).ToDelete();
+            return View(model);
         }
 
         // POST: StudentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, StudentDeleteForm form)
         {
             try
             {
+                if (!ModelState.IsValid) throw new Exception();
+                _studentRepository.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(form);
             }
         }
     }

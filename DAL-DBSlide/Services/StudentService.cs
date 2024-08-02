@@ -1,6 +1,7 @@
 ﻿using Common_DBSlide.Repositories;
 using DAL_DBSlide.Entities;
 using DAL_DBSlide.Mappers;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -9,11 +10,13 @@ using System.Text;
 
 namespace DAL_DBSlide.Services
 {
-    public class StudentService : IStudentRepository<Student>
+    public class StudentService : BaseService, IStudentRepository<Student>
     {
-        private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DBSlide;Integrated Security=True;";
         private readonly DbProviderFactory _factory = SqlClientFactory.Instance;
 
+        public StudentService(IConfiguration config) : base(config, "DBSlide")
+        {
+        }
 
         public IEnumerable<Student> Get()
         {

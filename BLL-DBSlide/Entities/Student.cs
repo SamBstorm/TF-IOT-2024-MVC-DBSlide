@@ -12,7 +12,9 @@ namespace BLL_DBSlide.Entities
         public DateTime Birth_date { get; set; }
         public string Login {
             get {
-                return $"{First_name.ToLower()[0]}{Last_name.ToLower().Substring(0, 7)}";
+                if(Last_name.Length >= 7)
+                    return $"{First_name.ToLower()[0]}{Last_name.ToLower().Substring(0, 7)}";
+                return $"{First_name.ToLower()[0]}{Last_name.ToLower()}";
             }
         }
         public int Section_id { get; set; }
