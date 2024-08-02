@@ -1,0 +1,44 @@
+﻿using BLL = BLL_DBSlide.Entities;
+using DAL = DAL_DBSlide.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BLL_DBSlide.Mappers
+{
+    internal static class Mapper
+    {
+        #region Student
+        public static BLL.Student ToBLL(this DAL.Student entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new BLL.Student()
+            {
+                Student_id = entity.Student_id,
+                First_name = entity.First_name,
+                Last_name = entity.Last_name,
+                Birth_date = entity.Birth_date,
+                Section_id = entity.Section_id,
+                Year_result = entity.Year_result,
+                Course_id = entity.Course_id
+            };
+        }
+
+        public static DAL.Student ToDAL(this BLL.Student entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new DAL.Student()
+            {
+                Student_id = entity.Student_id,
+                First_name = entity.First_name,
+                Last_name = entity.Last_name,
+                Birth_date = entity.Birth_date,
+                Login = entity.Login,
+                Section_id = entity.Section_id,
+                Year_result = entity.Year_result,
+                Course_id = entity.Course_id
+            };
+        } 
+        #endregion
+    }
+}
