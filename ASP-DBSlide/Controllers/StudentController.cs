@@ -67,7 +67,10 @@ namespace ASP_DBSlide.Controllers
                 if (!ModelState.IsValid) throw new Exception();
                 Student bllStudent = _studentRepository.Get(id);
                 bllStudent.Course_id = form.Course_Id;
-                bllStudent.Section_id = form.Section_Id;
+                bllStudent.Section = new Section
+                {
+                    Section_Id = form.Section_Id
+                };
                 bllStudent.Year_result = form.Year_Result;
                 _studentRepository.Update(id, bllStudent);
                 return RedirectToAction(nameof(Details), new { id });

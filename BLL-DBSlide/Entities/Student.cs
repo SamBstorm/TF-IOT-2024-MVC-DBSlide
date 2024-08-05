@@ -17,7 +17,8 @@ namespace BLL_DBSlide.Entities
                 return $"{First_name.ToLower()[0]}{Last_name.ToLower()}";
             }
         }
-        public int Section_id { get; set; }
+        //public int Section_id { get; set; }
+        public Section Section { get; set; }
         private int? _year_result;
         public int? Year_result {
             get { return _year_result; }

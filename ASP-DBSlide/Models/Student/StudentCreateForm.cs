@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ASP_DBSlide.Models.Section;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ASP_DBSlide.Models.Student

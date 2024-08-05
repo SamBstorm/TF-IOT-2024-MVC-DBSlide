@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ASP_DBSlide.Models.Student;
+using System.ComponentModel;
 
 namespace ASP_DBSlide.Models.Section
 {
@@ -9,6 +10,8 @@ namespace ASP_DBSlide.Models.Section
         [DisplayName("Nom")]
         public string Section_Name { get; set; }
         [DisplayName("Délégué")]
-        public int? Delegate_Id { get; set; }
+        public StudentListItem Delegate { get; set; }
+        [DisplayName("Inscrits")]
+        public IEnumerable<StudentListItem> Students { get; set; }
     }
 }

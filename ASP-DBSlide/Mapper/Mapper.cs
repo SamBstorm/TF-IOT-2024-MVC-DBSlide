@@ -28,7 +28,7 @@ namespace ASP_DBSlide.Mapper
                 Last_Name = entity.Last_name,
                 Login = entity.Login,
                 Birth_Date = entity.Birth_date,
-                Section_Id = entity.Section_id,
+                SectionDetails = entity.Section.ToDetails(),
                 Year_Result = entity.Year_result,
                 Course_Id = entity.Course_id
             };
@@ -40,7 +40,7 @@ namespace ASP_DBSlide.Mapper
             {
                 First_Name = entity.First_name,
                 Last_Name = entity.Last_name,
-                Section_Id = entity.Section_id
+                Section_Id = entity.Section.Section_Id
             };
         }
         public static StudentEditForm ToEdit(this Student entity)
@@ -48,7 +48,7 @@ namespace ASP_DBSlide.Mapper
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             return new StudentEditForm()
             {
-                Section_Id = entity.Section_id,
+                Section_Id = entity.Section.Section_Id,
                 Year_Result = entity.Year_result,
                 Course_Id = entity.Course_id
             };
@@ -61,7 +61,10 @@ namespace ASP_DBSlide.Mapper
                 First_name = entity.First_Name,
                 Last_name = entity.Last_Name,
                 Birth_date = entity.Birth_Date,
-                Section_id = entity.Section_id,
+                Section = new Section
+                {
+                    Section_Id = entity.Section_id,
+                },
                 Course_id = "0"
             };
         }
@@ -71,7 +74,10 @@ namespace ASP_DBSlide.Mapper
             return new Student()
             {
                 Course_id = entity.Course_Id,
-                Section_id = entity.Section_Id,
+                Section = new Section
+                {
+                    Section_Id = entity.Section_Id
+                },
                 Year_result = entity.Year_Result
             };
         }
@@ -85,7 +91,8 @@ namespace ASP_DBSlide.Mapper
             {
                 Section_Id = entity.Section_Id,
                 Section_Name = entity.Section_Name,
-                Delegate_Id = entity.Delegate_Id
+                Delegate = entity.Delegate?.ToListItem(),
+                Students = entity.Students?.Select(bll => bll.ToListItem())
             };
         }
 
@@ -105,7 +112,7 @@ namespace ASP_DBSlide.Mapper
             return new SectionEditForm()
             {
                 Section_Name = entity.Section_Name,
-                Delegate_Id = entity.Delegate_Id
+                Delegate_Id = entity.Delegate?.Student_id
             };
         }
 
@@ -124,7 +131,10 @@ namespace ASP_DBSlide.Mapper
             return new Section()
             {
                 Section_Name = entity.Section_Name,
-                Delegate_Id = entity.Delegate_Id
+                Delegate = new Student
+                {
+                    Student_id = (int)entity.Delegate_Id
+                }
             };
         }
         public static Section ToBLL(this SectionCreateForm entity)

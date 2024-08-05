@@ -173,5 +173,54 @@ namespace DAL_DBSlide.Services
                 }
             }
         }
+
+        public Student GetDelegateBySectionId(int section_id)
+        {
+            using(DbConnection connection = _factory.CreateConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT student_id, first_name, last_name, birth_date, login, student.section_id, year_result, course_id FROM section JOIN student ON section.delegate_id = student.student_id WHERE section.section_id = @section_id";
+                    DbParameter p_sid = command.CreateParameter();
+                    p_sid.Value = section_id;
+                    p_sid.ParameterName = "section_id";
+                    command.Parameters.Add(p_sid);
+                    using (DbDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader.ToStudent();
+                        }
+                        throw new ArgumentOutOfRangeException(nameof(section_id), "Identifiant non-valide");
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<Student> GetBySectionId(int section_id)
+        {
+            using (DbConnection connection = _factory.CreateConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT * FROM student WHERE section_id = @section_id";
+                    DbParameter p_sid = command.CreateParameter();
+                    p_sid.Value = section_id;
+                    p_sid.ParameterName = "section_id";
+                    command.Parameters.Add(p_sid);
+                    using (DbDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            yield return reader.ToStudent();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

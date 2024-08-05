@@ -83,6 +83,55 @@ namespace DAL_DBSlide.Services
             }
         }
 
+        public IEnumerable<Section> GetByDelegateId(int delegate_id)
+        {
+            using (DbConnection connection = _factory.CreateConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT * FROM section WHERE delegate_id = @delegate_id";
+                    DbParameter p_did = command.CreateParameter();
+                    p_did.Value = delegate_id;
+                    p_did.ParameterName = "delegate_id";
+                    command.Parameters.Add(p_did);
+                    using (DbDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            yield return reader.ToSection();
+                        }
+                    }
+                }
+            }
+        }
+
+        public Section GetByStudentId(int student_id)
+        {
+            using (DbConnection connection = _factory.CreateConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT section_id, section_name, delegate_id FROM section WHERE section_id = (SELECT section_id FROM student WHERE student_id = @student_id)";
+                    DbParameter p_sid = command.CreateParameter();
+                    p_sid.Value = student_id;
+                    p_sid.ParameterName = "student_id";
+                    command.Parameters.Add(p_sid);
+                    using (DbDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader.ToSection();
+                        }
+                        throw new ArgumentOutOfRangeException(nameof(student_id), "Identifiant non-valide");
+                    }
+                }
+            }
+        }
+
         public int Insert(Section entity)
         {
             using (DbConnection connection = _factory.CreateConnection())

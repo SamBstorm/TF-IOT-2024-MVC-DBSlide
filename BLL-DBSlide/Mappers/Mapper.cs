@@ -18,9 +18,9 @@ namespace BLL_DBSlide.Mappers
                 First_name = entity.First_name,
                 Last_name = entity.Last_name,
                 Birth_date = entity.Birth_date,
-                Section_id = entity.Section_id,
                 Year_result = entity.Year_result,
-                Course_id = entity.Course_id
+                Course_id = entity.Course_id,
+                Section = null
             };
         }
 
@@ -34,7 +34,7 @@ namespace BLL_DBSlide.Mappers
                 Last_name = entity.Last_name,
                 Birth_date = entity.Birth_date,
                 Login = entity.Login,
-                Section_id = entity.Section_id,
+                Section_id = entity.Section.Section_Id,
                 Year_result = entity.Year_result,
                 Course_id = entity.Course_id
             };
@@ -48,7 +48,8 @@ namespace BLL_DBSlide.Mappers
             {
                 Section_Id = entity.Section_id,
                 Section_Name = entity.Section_name,
-                Delegate_Id = entity.Delegate_id
+                Delegate = null,
+                Students = null
             };
         }
         public static DAL.Section ToDAL(this BLL.Section entity)
@@ -58,7 +59,7 @@ namespace BLL_DBSlide.Mappers
             {
                 Section_id = entity.Section_Id,
                 Section_name = entity.Section_Name,
-                Delegate_id = entity.Delegate_Id
+                Delegate_id = entity.Delegate?.Student_id
             };
         }
         #endregion

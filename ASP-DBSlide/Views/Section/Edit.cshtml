@@ -1,4 +1,6 @@
-﻿@model ASP_DBSlide.Models.Section.SectionEditForm
+﻿@inject IStudentRepository<BLL_DBSlide.Entities.Student> studentRepository
+@inject ISectionRepository<BLL_DBSlide.Entities.Section> sectionRepository
+@model ASP_DBSlide.Models.Section.SectionEditForm
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,7 +21,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Delegate_Id" class="control-label"></label>
-                <input asp-for="Delegate_Id" class="form-control" />
+                @* <input asp-for="Delegate_Id" class="form-control" /> *@
+                @Html.DropDownListFor(
+                    m => m.Delegate_Id,
+                    studentRepository.Get().Select(bll => new SelectListItem(){
+                        Text = $"{bll.First_name} {bll.Last_name}",
+                        Value = bll.Student_id.ToString()
+                    })
+                )
                 <span asp-validation-for="Delegate_Id" class="text-danger"></span>
             </div>
             <div class="form-group">

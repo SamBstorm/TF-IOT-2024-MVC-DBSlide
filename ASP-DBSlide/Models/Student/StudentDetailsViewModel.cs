@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ASP_DBSlide.Models.Section;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ASP_DBSlide.Models.Student
@@ -16,8 +17,9 @@ namespace ASP_DBSlide.Models.Student
         public DateTime Birth_Date { get; set; }
         [DisplayName("Login")]
         public string Login { get; set; }
-        [DisplayName("Section")]
-        public int Section_Id { get; set; }
+
+        public SectionDetailsViewModel SectionDetails { get; set; }
+        
         [DisplayName("Résultat annuel")]
         public int? Year_Result { get; set; }
         [DisplayName("Cours suivi")]
