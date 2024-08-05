@@ -1,4 +1,5 @@
-﻿using ASP_DBSlide.Models.Student;
+﻿using ASP_DBSlide.Models.Section;
+using ASP_DBSlide.Models.Student;
 using BLL_DBSlide.Entities;
 
 namespace ASP_DBSlide.Mapper
@@ -72,6 +73,67 @@ namespace ASP_DBSlide.Mapper
                 Course_id = entity.Course_Id,
                 Section_id = entity.Section_Id,
                 Year_result = entity.Year_Result
+            };
+        }
+        #endregion
+        #region Section
+
+        public static SectionDetailsViewModel ToDetails(this Section entity)
+        {
+            if(entity is null) throw new ArgumentNullException(nameof (entity));
+            return new SectionDetailsViewModel()
+            {
+                Section_Id = entity.Section_Id,
+                Section_Name = entity.Section_Name,
+                Delegate_Id = entity.Delegate_Id
+            };
+        }
+
+        public static SectionListItem ToListItem(this Section entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new SectionListItem()
+            {
+                Section_Id = entity.Section_Id,
+                Section_Name = entity.Section_Name
+            };
+        }
+
+        public static SectionEditForm ToEdit(this Section entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new SectionEditForm()
+            {
+                Section_Name = entity.Section_Name,
+                Delegate_Id = entity.Delegate_Id
+            };
+        }
+
+        public static SectionDeleteForm ToDelete(this Section entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new SectionDeleteForm()
+            {
+                Section_Name = entity.Section_Name
+            };
+        }
+
+        public static Section ToBLL(this SectionEditForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Section()
+            {
+                Section_Name = entity.Section_Name,
+                Delegate_Id = entity.Delegate_Id
+            };
+        }
+        public static Section ToBLL(this SectionCreateForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Section()
+            {
+                Section_Id = entity.Section_Id,
+                Section_Name = entity.Section_Name
             };
         }
         #endregion

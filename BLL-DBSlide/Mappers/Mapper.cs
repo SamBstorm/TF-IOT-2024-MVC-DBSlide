@@ -38,7 +38,29 @@ namespace BLL_DBSlide.Mappers
                 Year_result = entity.Year_result,
                 Course_id = entity.Course_id
             };
-        } 
+        }
+        #endregion
+        #region Section
+        public static BLL.Section ToBLL(this DAL.Section entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new BLL.Section()
+            {
+                Section_Id = entity.Section_id,
+                Section_Name = entity.Section_name,
+                Delegate_Id = entity.Delegate_id
+            };
+        }
+        public static DAL.Section ToDAL(this BLL.Section entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new DAL.Section()
+            {
+                Section_id = entity.Section_Id,
+                Section_name = entity.Section_Name,
+                Delegate_id = entity.Delegate_Id
+            };
+        }
         #endregion
     }
 }
