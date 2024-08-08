@@ -1,4 +1,5 @@
-﻿using ASP_DBSlide.Mapper;
+﻿using ASP_DBSlide.Handlers;
+using ASP_DBSlide.Mapper;
 using ASP_DBSlide.Models.Student;
 using BLL_DBSlide.Entities;
 using Common_DBSlide.Repositories;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASP_DBSlide.Controllers
 {
+    [ConnectedAuthorize("ADMIN")]
     public class StudentController : Controller
     {
         private IStudentRepository<Student> _studentRepository;

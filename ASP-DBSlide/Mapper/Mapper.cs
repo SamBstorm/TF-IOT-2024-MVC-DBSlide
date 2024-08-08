@@ -1,6 +1,7 @@
 ﻿using ASP_DBSlide.Models.Group;
 using ASP_DBSlide.Models.Section;
 using ASP_DBSlide.Models.Student;
+using ASP_DBSlide.Models.User;
 using BLL_DBSlide.Entities;
 
 namespace ASP_DBSlide.Mapper
@@ -163,8 +164,14 @@ namespace ASP_DBSlide.Mapper
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             return new StudentGroup(entity.Name);
-        } 
+        }
         #endregion
-
+        #region User
+        public static User ToBLL(this UserRegisterForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new User(entity.Email, entity.Password, entity.First_Name, entity.Last_Name);
+        }
+        #endregion
     }
 }

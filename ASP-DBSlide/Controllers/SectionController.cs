@@ -1,4 +1,5 @@
-﻿using ASP_DBSlide.Mapper;
+﻿using ASP_DBSlide.Handlers;
+using ASP_DBSlide.Mapper;
 using ASP_DBSlide.Models.Section;
 using BLL_DBSlide.Entities;
 using Common_DBSlide.Repositories;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASP_DBSlide.Controllers
 {
+    [ConnectedAuthorize]
     public class SectionController : Controller
     {
         private readonly ISectionRepository<Section> _sectionRepository;

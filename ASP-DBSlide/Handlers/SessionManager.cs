@@ -21,5 +21,16 @@ namespace ASP_DBSlide.Handlers
                 _session.SetString(nameof(CurrentGroup), JsonSerializer.Serialize<StudentGroup>(value));
             }
         }
+
+        public User? CurrentUser
+        {
+            get {
+                return JsonSerializer.Deserialize<User?>(_session.GetString(nameof(CurrentUser)) ?? "null");
+            }
+            set {
+                if (value is null) _session.Clear();
+                _session.SetString(nameof(CurrentUser), JsonSerializer.Serialize<User>(value));
+            }
+        }
     }
 }

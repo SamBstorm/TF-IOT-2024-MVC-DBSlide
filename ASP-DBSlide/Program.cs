@@ -35,6 +35,8 @@ namespace ASP_DBSlide
             builder.Services.AddScoped<IStudentRepository<DAL.Entities.Student>, DAL.Services.StudentService>();
             builder.Services.AddScoped<ISectionRepository<BLL.Entities.Section>, BLL.Services.SectionService>();
             builder.Services.AddScoped<ISectionRepository<DAL.Entities.Section>, DAL.Services.SectionService>();
+            builder.Services.AddScoped<IUserRepository<BLL.Entities.User, BLL.Entities.Enums.Role>, BLL.Services.UserService>();
+            builder.Services.AddScoped<IUserRepository<DAL.Entities.User, string>, DAL.Services.UserService>();
 
             var app = builder.Build();
 

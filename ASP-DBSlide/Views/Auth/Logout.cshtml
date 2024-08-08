@@ -1,0 +1,8 @@
+﻿@using ASP_DBSlide.Handlers
+@inject SessionManager _session
+<h1>Êtes vous sûr de vouloir vous déconnecter?</h1>
+<form asp-action="Logout" asp-controller="Auth" method="post">
+    @Html.Hidden("userId",_session.CurrentUser?.User_Id.ToString());
+    <button type="submit">Oui</button>
+    <a asp-action="Index" asp-controller="Home">Annuler</a>
+</form>

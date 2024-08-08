@@ -56,3 +56,55 @@ GO
 SP_User_insert @email = 'samuel.legrain@bstorm.be', @password = 'Test1234=', @first_name = 'Samuel', @last_name = 'Legrain'
 SP_User_CheckPassword @email = 'samuel.legrain@bstorm.be', @password = 'Test1234='
 */
+
+ALTER TABLE [User] ADD CONSTRAINT PK_User PRIMARY KEY ([User_Id])
+GO
+
+CREATE TABLE Role(
+    [Role] CHAR(5) NOT NULL CONSTRAINT PK_Role PRIMARY KEY
+)
+GO
+
+INSERT INTO [Role] VALUES ('ADMIN'), ('AUTOR'), ('MODER')
+GO
+
+CREATE TABLE User_Role(
+    User_Id UNIQUEIDENTIFIER NOT NULL,
+    [Role] CHAR(5) NOT NULL,
+    CONSTRAINT PK_UserRole PRIMARY KEY (User_Id, [Role]),
+    CONSTRAINT FK_UserRole_User FOREIGN KEY (User_Id) REFERENCES [User](User_Id),
+    CONSTRAINT FK_UserRole_Role FOREIGN KEY ([Role]) REFERENCES [Role]([Role])
+)
+GO
+
+CREATE PROCEDURE SP_User_SetAsAdmin 
+    @id UNIQUEIDENTIFIER
+AS
+BEGIN
+    INSERT INTO User_Role VALUES (@id, 'ADMIN');
+END
+GO
+
+CREATE PROCEDURE SP_User_SetAsAutor 
+    @id UNIQUEIDENTIFIER
+AS
+BEGIN
+    INSERT INTO User_Role VALUES (@id, 'AUTOR');
+END
+GO
+
+CREATE PROCEDURE SP_User_SetAsModerator 
+    @id UNIQUEIDENTIFIER
+AS
+BEGIN
+    INSERT INTO User_Role VALUES (@id, 'MODER');
+END
+GO
+
+CREATE PROCEDURE SP_User_Clear_Role 
+    @id UNIQUEIDENTIFIER
+AS
+BEGIN
+    DELETE FROM User_Role WHERE User_Id = @id;
+END
+GO

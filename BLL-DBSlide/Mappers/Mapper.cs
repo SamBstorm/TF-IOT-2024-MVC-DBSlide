@@ -63,5 +63,25 @@ namespace BLL_DBSlide.Mappers
             };
         }
         #endregion
+        #region User
+        public static DAL.User ToDAL(this BLL.User entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new DAL.User() { 
+                User_Id = entity.User_Id,
+                Email = entity.Email,
+                Password = entity.Password,
+                First_Name = entity.First_Name,
+                Last_Name = entity.Last_Name
+            };
+        }
+
+        public static BLL.User ToBLL(this DAL.User entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new BLL.User(entity.User_Id, entity.Email, entity.Password, entity.First_Name, entity.Last_Name);
+        }
+        #endregion
+
     }
 }

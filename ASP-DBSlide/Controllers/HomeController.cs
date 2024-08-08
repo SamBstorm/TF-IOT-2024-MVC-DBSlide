@@ -15,8 +15,8 @@ namespace ASP_DBSlide.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction(nameof(Index), "Student");
-            //return View();
+            //return RedirectToAction(nameof(Index), "Student");
+            return View();
         }
 
         public IActionResult Privacy()

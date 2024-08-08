@@ -33,5 +33,17 @@ namespace DAL_DBSlide.Mappers
                 Delegate_id = (record[nameof(Section.Delegate_id)] is DBNull) ? null : (int?)record[nameof(Section.Delegate_id)]
             };
         }
+
+        public static User ToUser(this IDataRecord record) {
+            if (record is null) throw new ArgumentNullException(nameof(record), "Aucune informations");
+            return new User()
+            {
+                User_Id = (Guid)record[nameof(User.User_Id)],
+                Email = record[nameof(User.Email)].ToString(),
+                Password = record[nameof(User.Password)].ToString(),
+                First_Name = record[nameof(User.First_Name)].ToString(),
+                Last_Name = record[nameof(User.Last_Name)].ToString()
+            };
+        }
     }
 }
